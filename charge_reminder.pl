@@ -21,6 +21,7 @@ sub getPostData {
   my($work_name, $charger) = @_;
   print "charger -> $charger\n";
 
+  my $br = "\r\n";
   my $conf = {
     priv_members => {
     },
@@ -35,9 +36,17 @@ sub getPostData {
         channel => '@miura',
         text    => 'すみませんテストです$charger  これでおわり<!group>',
       },
-      mf_morning => {
+      mf_mtg_morning => {
         channel => '@miura',
-        text    => '本日の朝会の発表者は@'.$charger.'さんです！<!group>',
+        text    => '本日の朝会の発表者は'.$charger.'さんです！'.$br.'よろしくお願いします！<!group>',
+      },
+      mc_mtg_frontend => {
+        channel => '@miura',
+        text    => '本日のMCフロントエンドMTGの司会&Wiki準備する人は'.$charger.'さんです！'.$br.'http://wiki.mf.local/tag/MC-FRONTEND-MTG'.$br.'よろしくお願いします！<!group>',
+      },
+      mc_mtg_develop => {
+        channel => '@miura',
+        text    => '本日のMC開発MTGの司会&Wiki準備する人は'.$charger.'さんです！'.$br.'http://wiki.mf.local/tag/MC-ENGINEER-MTG'.$br.'よろしくお願いします！<!group>',
       },
     },
   };
@@ -50,6 +59,7 @@ sub getPostData {
 
   return %return_data;
 }
+
 
 # DB接続
 my $dbh;
@@ -83,13 +93,12 @@ while($ref = $sth->fetchrow_hashref()){
 $sth->finish();
 
 ## 発言者番号のインクリメント
-print "next->$next_charger_number";
 $next_charger_number++;
 if ($next_charger_number > @member ) {
   $next_charger_number = 1;
 }
-print "next->$next_charger_number";
 
+## 発言者番号をDBに保存
 $sth = $dbh->prepare("update charge set next_charger_number = $next_charger_number where work_name = ?");
 $sth->execute($work_name);
 $sth->finish();
@@ -97,8 +106,7 @@ $sth->finish();
 # DB切断
 $dbh->disconnect();
 
-
-#warn Dumper \%post_data;
-MF::Notify::Slack->new->post(&getPostData($work_name, $charger));  # チャンネルへのpost
+# slackに通知
+MF::Notify::Slack->new->post(&getPostData($work_name, $charger));
 
 exit;
