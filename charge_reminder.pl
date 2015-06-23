@@ -37,15 +37,15 @@ sub getPostData {
         text    => 'すみませんテストです$charger  これでおわり<!group>',
       },
       mf_mtg_morning => {
-        channel => '@miura',
+        channel => '#mc-doraemon',
         text    => '本日の朝会の発表者は'.$charger.'さんです！'.$br.'よろしくお願いします！<!group>',
       },
       mc_mtg_frontend => {
-        channel => '@miura',
+        channel => '#mc-doraemon',
         text    => '本日のMCフロントエンドMTGの司会&Wiki準備する人は'.$charger.'さんです！'.$br.'http://wiki.mf.local/tag/MC-FRONTEND-MTG'.$br.'よろしくお願いします！<!group>',
       },
       mc_mtg_develop => {
-        channel => '@miura',
+        channel => '#mc-doraemon',
         text    => '本日のMC開発MTGの司会&Wiki準備する人は'.$charger.'さんです！'.$br.'http://wiki.mf.local/tag/MC-ENGINEER-MTG'.$br.'よろしくお願いします！<!group>',
       },
     },
