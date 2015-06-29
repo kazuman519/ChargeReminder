@@ -51,7 +51,7 @@ sub createPostData {
 }
 
 
-# DB接続
+# DB接続 XXX:この辺りの情報は外だししといたほうがよさげ
 my $dbh;
 $dbh = DBI->connect(
   "DBI:mysql:database=$database_name;host=localhost;port=3306;",
